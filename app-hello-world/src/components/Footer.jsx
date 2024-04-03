@@ -1,4 +1,5 @@
-const Footer = () => {
+const Footer = ({config}) => {
+  console.log(config);
   return (
     <>
       <ul>

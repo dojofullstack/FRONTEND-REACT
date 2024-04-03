@@ -4,9 +4,17 @@ import Header from "../components/Header";
 
 
 const Blog = () => {
+
+  const config = {
+    imagenBanner: 'https://img.freepik.com/vector-premium/diseno-banner-tienda-al-aire-libre-zapatos-seguimiento_7605-855.jpg',
+    domainName : 'tiendashoes.com'
+  }
+
+
+
   return (
     <>
-      <Header />
+      <Header config={config} />
         <BlogMain/>
       <Footer />
     </>

@@ -9,11 +9,12 @@
 // }
 
 
-const Header = () => {
+const Header = ({config}) => {
+    // console.log(config);
     return (
             <>
-                <img height='50px' src="https://w7.pngwing.com/pngs/697/992/png-transparent-todoist-wunderlist-task-android-logo-action-item-symbol-thumbnail.png"  />
-                <h1>App Home</h1>
+                <img height='90px' src={config.imagenBanner}  />
+                <h1>{config.domainName}</h1>
             </>
           );
 }
