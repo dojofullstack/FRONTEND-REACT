@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Main from "../components/Main";
 import axios from 'axios';
+import appContext from "../context";
 
 const Home = () => {
 
+  const {storeDataState, updateProfileUser, updateProducts, updateCart} = useContext(appContext);
+
   const [productos, setProductos] =  useState({});
 
-  console.log(productos);
+  console.log('storeDataState', storeDataState);
 
   const config = {
     imagenBanner: 'https://img.freepik.com/vector-premium/diseno-banner-tienda-al-aire-libre-zapatos-seguimiento_7605-855.jpg',

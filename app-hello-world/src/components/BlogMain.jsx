@@ -1,6 +1,40 @@
+import { useContext, useRef } from "react";
+import appContext from "../context";
+import { useNavigate } from "react-router-dom";
+
+
+
 const BlogMain = () => {
+
+
+  const {storeDataState, updateProfileUser, updateProducts, updateCart} = useContext(appContext);
+
+  console.log('storeDataState', storeDataState);
+  // console.log('updateProducts', updateProducts);
+
+  const inputRef = useRef();
+
   return (
     <>
+
+ 
+      <br/>
+
+      <input ref={inputRef} placeholder="ingresar nombre"  />
+
+      <button onClick={() => console.log(inputRef.current.value)}>mostrar nobre</button>
+
+      <br/>
+
+      <button onClick={() => updateProfileUser({'id': 1, 'name': inputRef.current.value, 'email': 'henry@gmail.com'})   }>Actualizat info del usuario</button>
+
+      <br/>
+      <button  onClick={() => updateProducts(['iphone', 'xiomin', 'samsung']) }  >Actualizar productos</button>
+
+
+      <br/>
+      <button  onClick={() => updateCart(['nokia', 'pixel']) }  >Agregar al cart</button>
+
       <section>
         <article>react es genial</article>
         <article>python es genial</article>
