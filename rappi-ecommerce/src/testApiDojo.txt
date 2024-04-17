@@ -1,0 +1,19 @@
+
+
+
+https://api.dojopy.com/api/token/
+{
+"username": "dojo",
+"password": "1233"
+}
+
+https://api.dojopy.com/api/accounts/register/
+
+metodo post:
+{
+"email":"pepe12@gmail.com",
+"password":"123456",
+"first_name":"RestauratDojo",
+"last_name":"sanhhez",
+"username":"pepe12@gmail.com"
+}

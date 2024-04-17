@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useStore from "../store";
 
 
@@ -5,6 +6,15 @@ import useStore from "../store";
 export const Main = () => {
 
     const products = useStore((state) => state.products);
+    const getAllProduct = useStore((state) => state.getAllProduct);
+
+    console.log("products", products);
+
+    useEffect(() => {
+        if (Object.keys(products) == 0){
+            getAllProduct();
+        }
+    }, [products])
 
     return (
         <>

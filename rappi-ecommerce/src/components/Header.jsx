@@ -1,6 +1,6 @@
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaUserCircle } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
 import useStore from "../store";
 
@@ -10,7 +10,12 @@ export const Header = () => {
     const [searchInput, setSearchInput] =  useState('');
 
     const updateProducts = useStore((state) => state.updateProducts);
+    const loginInit = useStore((state) => state.loginInit);
     // const products = useStore((state) => state.products);
+
+    const isLogin = useStore((state) => state.isLogin );
+    const profileUser = useStore((state) => state.profileUser );
+
 
 
     // console.log('products', products);
@@ -20,7 +25,16 @@ export const Header = () => {
         axios.get(url).then(data => {
             updateProducts(data.data);
         })
-    }    
+    } 
+
+
+    useEffect(() => {
+
+      if (!isLogin && Object.keys(profileUser) == 0 ){
+        loginInit();
+      }
+
+    }, [isLogin, profileUser])
 
 
 
@@ -61,11 +75,17 @@ export const Header = () => {
         </div>
 
         <div className="flex-none gap-2">
+
+   {!isLogin &&
           <div className="flex gap-3 cursor-pointer">
             <FaUserCircle className="text-3xl" />
             <p className="text-lg">Ingresar</p>
           </div>
-          {/* <div className="dropdown dropdown-end">
+    }
+
+
+      {isLogin && Object.keys(profileUser).length > 1 &&
+          (<div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -74,7 +94,7 @@ export const Header = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  src={profileUser.image}
                 />
               </div>
             </div>
@@ -84,18 +104,20 @@ export const Header = () => {
             >
               <li>
                 <a className="justify-between">
-                  Profile
+                  Perfil {profileUser.firstName}
                   <span className="badge">New</span>
                 </a>
               </li>
               <li>
-                <a>Settings</a>
+                <a>Configuracion</a>
               </li>
               <li>
-                <a>Logout</a>
+                <a>Cerra sesion</a>
               </li>
             </ul>
-          </div> */}
+          </div>)
+          }
+
         </div>
       </div>
 
