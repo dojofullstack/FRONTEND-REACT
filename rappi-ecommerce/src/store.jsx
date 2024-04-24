@@ -1,5 +1,37 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { create } from 'zustand'
+
+
+
+const addProductToCart = (set, product) => {
+
+  set((state) => ({ cartState: [...state.cartState, product]}));
+
+}
+
+const closeLogin = (set) => {
+
+  localStorage.removeItem("token");
+  set({
+    profileUser: {},
+    isLogin: false,
+  });
+
+  // window.location.href = "/login";
+  
+} 
+
+
+const getDetailProduct = (set, idProduct) => {
+  const url = `https://dummyjson.com/products/${idProduct}`;
+  axios.get(url).then(data => {
+      set({
+        productDetail: data.data
+      });
+  })
+} 
+
 
 
 
@@ -20,24 +52,33 @@ const loginInit = (set) => {
 
   const token = localStorage.getItem("token");
 
-  console.log("token", token);
+  // console.log("token", token);
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + token
+
+  if (token != null){
+
+      // console.log("token", token);
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+
+
+      axios.get(urlAuth, {
+        headers: headers
+      } ).then(data => {
+        console.log("login iinnit auth", data.data);
+        set({
+          profileUser: data.data,
+          isLogin: true
+        })
+
+      })
+
+
   }
 
-
-  axios.get(urlAuth, {
-    headers: headers
-  } ).then(data => {
-    console.log("login iinnit auth", data.data);
-    set({
-      profileUser: data.data,
-      isLogin: true
-    })
-
-  })
 
 }
 
@@ -74,9 +115,14 @@ const useStore = create((set) => ({
   loginAuth: (username , password) => loginAuth(set, username , password),
   loginInit: () => loginInit(set),
   products: [],
+  productDetail: {},
+  getDetailProduct: (idProduct) => getDetailProduct(set, idProduct),
   getAllProduct: () => getAllProduct(set),
   updateProducts: (data) => set({ products: data }),
-  profileUser: {}
+  profileUser: {},
+  closeLogin: () => closeLogin(set),
+  cartState: [],
+  addProductToCart: (product) => addProductToCart(set, product)
 }))
 
 
